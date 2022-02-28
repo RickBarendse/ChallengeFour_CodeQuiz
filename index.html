@@ -8,26 +8,66 @@
     <title>Code Quiz</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
     <header>
         <div class="header">
             <div>
                 <a>View High Score</a>
             </div>
-            <div>"Time Remaining "
-                <span id="timer">0</span>
-            </div> 
+            <time>Time:  <span id="time"></span></time>
         </div>
     </header>
 
     <!-- quiz intro and start -->
-    <div class="intro_start">
-        <h1 class="intro-title">Coding Quiz Challenge</h1>
-            <h3 class="intro-text">Try to answer the following code-related questions within the time limit.
+    <main>
+        <div id=intro_start_card class="card">
+            <h1 id=intro_title>Coding Quiz Challenge</h1>
+                <h3 class="intro_text">Try to answer the following code-related questions within the time limit.
                     Kepp in mind that incorrect answers will penalize your score/time by ten seconds!
                 </h3>
-        <button class="start_btn">Start</button>
-    </div>
+            <button id=start_button class="button">Start Quiz</button>
+        </div>
+
+        <div hidden id=questions_card class="card">
+        <!--<header class="question_number">Question ""</header> -->
+            <h2 id=question_text></h2>
+
+            <div id=question_options>
+                <button id=option0 class="button option_button"></button>
+                <button id=option1 class="button option_button"></button>
+                <button id=option2 class="button option_button"></button>
+                <button id=option3 class="button option_button"></button>
+            </div>
+
+            <div id=results>
+                <hr>
+                <p id=results_text></p>
+            </div>
+        </div>
+
+        <div hidden id=score_card class="card">
+            <h2>All done!</h2>
+            <p>Y0ur final score is <span id=score></span></p>
+            <form class="initial_form" id="submission-form">
+                <label for="initials">Enter initials:  </label>
+                <input type="text" id="initials">
+                <button id="submit_button" class="button">Submit</button>
+            </form>
+        </div>
+
+        <div hidden id=leaderboard_card class="card">
+            <h2>Highscores</h2>
+            <ul id="highscore_list">
+            </ul>
+            <div class="leaderboard_buttons">
+                <button id="back_button" class="button">Back</button>
+                <button id="clear_button" class="button">Clear Highscores</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="./assets/js/script.js"></script>
 
 </body>
 </html>
