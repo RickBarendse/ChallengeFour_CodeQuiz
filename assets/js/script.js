@@ -31,7 +31,7 @@ var questions = [
         answer: "4. console.log",
     },
 
-]// select which card div to display by id and assign to variables
+]// select which card to display by id and assign to variables
 var startCard = document.querySelector("#intro_start_card");
 var questionCard = document.querySelector("#questions_card");
 var scoreCard = document.querySelector("#score_card");
@@ -46,7 +46,7 @@ function hideCards() {
 }
 
 var results = document.querySelector("#results");
-var resultsText = document.querySelector("results_text");
+var resultsText = document.querySelector("#results_text");
 
 // hide results section
 function hideResultText() {
@@ -123,10 +123,10 @@ function checkAnswer(eventObject) {
     results.style.display = "block";
     if (optionIsCorrect(optionButton)) {
         resultsText.textContent = "Correct!";
-        setTimeout(hideResultsText, 1000);
+        //setTimeout(hideResultsText, 1000);
     } else {
         resultsText.textContent = "Incorrect!";
-        setTimeout(hideResultText, 1000)
+        //setTimeout(hideResultText, 1000)
         if (time >= 10) {
             time = time -10;
             displayTime();
@@ -160,7 +160,7 @@ function endQuiz() {
 }
 
 var submitButton = document.querySelector("#submit_button");
-var inputText = document.querySelector("#initials");
+var inputInitials = document.querySelector("#initials");
 
 // store initials and score when submit is clicked
 submitButton.addEventListener("click", storeScore);
@@ -169,14 +169,14 @@ function storeScore(event) {
     event.preventDefault();
 
     // make sure user enters initials
-    if (!inputText.value) {
+    if (!inputInitials.value) {
         alert("Please enter you initials!");
         return;
     }
 
     var leaderboardEntry = {
-        initials: inputText.value, 
-        socre: time,
+        initials: inputInitials.value, 
+        score: time,
     };
 
     updateStoredLeaderboard(leaderboardEntry);
@@ -196,7 +196,7 @@ function updateStoredLeaderboard(leaderboardEntry) {
     localStorage.setItem("leaderboardLeaders", JSON.stringify(leaderboardLeaders));
 }
 
-// get list of leaders from local storage sand convert to an array
+// get list of leaders from local storage and convert to an array
 function getLeaderboard() {
     var storedLeaderboard = localStorage.getItem("leaderboardLeaders");
     if (storedLeaderboard !== null) {
@@ -205,14 +205,69 @@ function getLeaderboard() {
     } else {
         leaderboardLeaders = [];
     }
-    return leaderboardItems;
+    return leaderboardLeaders;
 }
 
 // display leader board
 function showLeaderboard() {
-    
+    var orderedLeaderboardEntries = orderLeaderboard();
+    var highscoreList = document.querySelector("#highscore_list");
+    highscoreList.innerTHML = "";
+    for (let i = 0; i < orderedLeaderboardEntries.length; i++) {
+        var leaderboardItem = orderedLeaderboardEntries[i];
+        var newListItem = document.createElement("li");
+        newListItem.textContent =
+            leaderboardItem.initials + " - " + leaderboardItem.score;
+        highscoreList.append(newListItem);
+    }
 }
 
+// sort leaderboard by highest score to lowest score
+function orderLeaderboard() {
+    var leaderboardEntries = getLeaderboard();
+    if (!leaderboardEntries) {
+        return;
+    }
+
+    leaderboardEntries.sort(function (a, b) {
+        return b.score - a.score;
+    });
+    return leaderboardEntries;
+}
+
+var clearButton = document.querySelector("#clear_button");
+clearButton.addEventListener("click", clearHighscores);
+
+// clear high scores when clear button is clicked
+function clearHighscores() {
+    window.localStorage.clear();
+    showLeaderboard();
+}
+
+var backButton = document.querySelector("#back_button");
+backButton.addEventListener("click", returnToStart);
+
+// restart quiz
+function returnToStart() {
+    hideCards();
+    startCard.removeAttribute("hidden");
+}
+
+// click on link to show highscores
+var leaderboardLink = document.querySelector("#leaderboard_link");
+leaderboardLink.addEventListener("click", viewLeaderboard);
+
+function viewLeaderboard() {
+    hideCards();
+    leaderboardCard.removeAttribute("hidden");
+
+    clearInterval(intervalID);
+
+    time = undefined;
+    displayTime();
+
+    showLeaderboard();
+}
 
 
 
