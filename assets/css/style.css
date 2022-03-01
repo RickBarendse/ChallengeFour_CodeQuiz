@@ -132,3 +132,65 @@ main {
     padding: 5px;
 }
 
+/* MEDIA QUERY FOR TABLETS AND SMALLER */
+@media screen and (max-width: 1024px) {
+    header {
+        display: flex;
+        font-size: small;
+    }
+
+    #leaderboard_link {
+        font-size: small;
+    }
+    
+    header time {
+        font-size: small;
+    }
+
+    header span {
+        font-size: small;
+    }
+
+    .card {
+        font-size: small;
+        padding: 0px;
+    }
+
+    .card button {
+        font-size: medium;
+        padding: 2px;
+        margin: 2px;
+    }
+ 
+    #results p {
+        font-size: medium;
+    }
+
+    #score_card h2 {
+        font-size: medium;
+    }
+
+    #score_card p {
+        font-size: medium;
+    }
+
+    #score_card span {
+        font-size: medium;
+    }
+
+    .initial_form  label {
+        font-size: medium;
+    }
+
+    .intitial_form input {
+        font-size: medium;
+    }
+    
+    #leaderboard_card h2 {
+        font-size: medium;
+    }
+
+    #highscore_list li {
+        font-size: smaller;
+    }
+}
